@@ -3,15 +3,20 @@ require 'yaml'
 
 CONFIG = YAML.load_file('config.yaml')
 bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: 951501962585726977, prefix: '>'
-
 puts "Bot invite link: #{bot.invite_url}"
-able_roles = ['Core Raider', 'Standby Raider']
+puts "Bot active channels: #{CONFIG['bot-channels']}"
+puts "Role IDs allowed for request: #{CONFIG['allow-request']}"
+puts "Role IDs allowed for manage: #{CONFIG['allow-manage']}"
 
-bot.command(:request, allowed_roles: able_roles, channels: ['#bot-test'], description: 'Takes a request and creates a ticket to be resolved. Request multiple items by separating `[number][name]` with a comma.', usage: 'request [number][item name/description](, [number][name of additional items])') do |event, *args|
-  #current_role_names = event.user.roles.map(&:name)
-  #can_request = allowed_roles.any? { |authorized_role| current_role_names.include?(authorized_role) }
-  #return "Only #{allowed_roles.join(' or ')} can request items from the guild bank." unless can_request
+bot.command(:test_permission, allowed_roles: CONFIG['allow-manage'], channels: CONFIG['bot-channels'], description: 'Command to test permission setting.') do |event|
+  event.respond 'Permission check passed!'
+end
 
+bot.command(:meta, help_available: false) do |event|
+  event.respond 'You found the hidden command!'
+end
+
+bot.command(:request, allowed_roles: CONFIG['allow-request'], channels: CONFIG['bot-channels'], description: 'Takes a request and creates a ticket to be resolved. Request multiple items by separating `[number][name]` with a comma.', usage: 'request [number][item name/description](, [number][name of additional items])') do |event, *args|
   request = args.join(' ')
 
   pairs = []
