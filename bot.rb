@@ -4,6 +4,7 @@ require 'yaml'
 CONFIG = YAML.load_file('config.yaml')
 PERMISSIONS = YAML.load_file('permissions.yaml')
 bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: 951501962585726977, prefix: '>'
+
 puts "Bot invite link: #{bot.invite_url}"
 puts "Bot active channels: #{PERMISSIONS['bot-channels']}"
 puts "Role IDs allowed for request: #{PERMISSIONS['allow-request']}"
@@ -40,8 +41,15 @@ bot.run
 =begin
 Considerations
 
-* All users should be able to request
-* A user should be able to have a request tied to their username
-* Users should be able to edit or cancel their own requests
+* All raiders should be able to request
+* Raiders requests should be tied to their username
+* Raiders be able to edit or cancel their own requests
 * Managers should be able to edit or cancel all requests.
+
+I think, to start, we should purely interact with the Rails API via discord.
+This might be a little easier to manage for now, but we can always update the app later to allow messages to be sent from the web app.
+
+Idea is: discord bot works as the front end and the Rails API backend handles all the actual data persistence.
+
+In the future, it might be cool for managers to be able to log onto a web view, and handle tickets there, and have the bot automatically notify folks on discord.
 =end
