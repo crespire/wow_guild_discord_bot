@@ -7,8 +7,8 @@ bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: 951
 
 puts "Bot invite link: #{bot.invite_url}"
 puts "Bot active channels: #{PERMISSIONS['channels']}"
-puts "Role IDs allowed for request: #{PERMISSIONS['allow-request']}"
-puts "Role IDs allowed for manage: #{PERMISSIONS['allow-manage']}"
+puts "Role IDs allowed for request: #{PERMISSIONS['request']}"
+puts "Role IDs allowed for manage: #{PERMISSIONS['manage']}"
 
 bot.command(:close, allowed_roles: PERMISSIONS['manage'], channels: PERMISSIONS['channels'], description: 'Command to test permission setting.') do |event|
   event.respond 'Close ticket command'
