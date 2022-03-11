@@ -18,7 +18,7 @@ bot.command(:meta, help_available: false) do |event|
   event.respond 'You found the hidden command!'
 end
 
-bot.command(:request, allowed_roles: PERMISSIONS['allow-request'], channels: PERMISSIONS['bot-channels'], description: 'Takes a request and creates a ticket to be resolved. Request multiple items by separating `[number][name]` with a comma.', usage: 'request [number][item name/description](, [number][name of additional items])') do |event, *args|
+bot.command(:request, min_args: 2, allowed_roles: PERMISSIONS['allow-request'], channels: PERMISSIONS['bot-channels'], description: 'Takes a request and creates a ticket to be resolved. Request multiple items by separating `[number][name]` with a comma.', usage: 'request [number][item name/description](, [number][name of additional items])') do |event, *args|
   request = args.join(' ')
   request.gsub!(/(\ba\b|\ban\b)/, '1')
   request.gsub!(/(\bone\b)/, '1')
