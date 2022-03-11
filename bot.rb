@@ -20,8 +20,8 @@ end
 
 bot.command(:request, allowed_roles: PERMISSIONS['allow-request'], channels: PERMISSIONS['bot-channels'], description: 'Takes a request and creates a ticket to be resolved. Request multiple items by separating `[number][name]` with a comma.', usage: 'request [number][item name/description](, [number][name of additional items])') do |event, *args|
   request = args.join(' ')
-  request.gsub!(/^[a]/, '1')
-  request.gsub!('one', '1')
+  request.gsub!(/(\ba\b|\ban\b)/, '1')
+  request.gsub!(/(one)/, '1')
 
   pairs = []
   request.split(',').chunk { |el| el.match(/[[:digit:]]/) }.each { |_, chunk| pairs << chunk.pop.strip }
