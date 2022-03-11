@@ -1,16 +1,16 @@
 require 'discordrb'
+require 'yaml'
 
-api_token = File.read('discord.api')
-bot = Discordrb::Commands::CommandBot.new token: api_token, client_id: 951501962585726977, prefix: '>'
+CONFIG = YAML.load_file('config.yaml')
+bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: 951501962585726977, prefix: '>'
 
 puts "Bot invite link: #{bot.invite_url}"
+able_roles = ['Core Raider', 'Standby Raider']
 
-bot.command(:request, description: 'Takes a request and creates a ticket to be resolved. Request multiple items by separating `[number] [name]` with a comma.', usage: 'request [number] [item name/description](, [number] [name of additional items])') do |event, *args|
-  allowed_roles = ['Core Raider', 'Standby Raider']
-
-  current_role_names = event.user.roles.map(&:name)
-  can_request = allowed_roles.any? { |authorized_role| current_role_names.include?(authorized_role) }
-  return "Only #{allowed_roles.join(' or ')} can request items from the guild bank." unless can_request
+bot.command(:request, allowed_roles: able_roles, channels: ['#bot-test'], description: 'Takes a request and creates a ticket to be resolved. Request multiple items by separating `[number][name]` with a comma.', usage: 'request [number][item name/description](, [number][name of additional items])') do |event, *args|
+  #current_role_names = event.user.roles.map(&:name)
+  #can_request = allowed_roles.any? { |authorized_role| current_role_names.include?(authorized_role) }
+  #return "Only #{allowed_roles.join(' or ')} can request items from the guild bank." unless can_request
 
   request = args.join(' ')
 
