@@ -1,6 +1,6 @@
 require 'discordrb'
 
-api_token = File.read("#{__dir__}/discord.api")
+api_token = File.read('discord.api')
 bot = Discordrb::Commands::CommandBot.new token: api_token, client_id: 951501962585726977, prefix: '>'
 
 puts "Bot invite link: #{bot.invite_url}"
