@@ -9,8 +9,8 @@ puts "Bot active channels: #{PERMISSIONS['bot-channels']}"
 puts "Role IDs allowed for request: #{PERMISSIONS['allow-request']}"
 puts "Role IDs allowed for manage: #{PERMISSIONS['allow-manage']}"
 
-bot.command(:test_permission, allowed_roles: PERMISSIONS['allow-manage'], channels: PERMISSIONS['bot-channels'], description: 'Command to test permission setting.') do |event|
-  event.respond 'Permission check passed!'
+bot.command(:close, allowed_roles: PERMISSIONS['allow-manage'], channels: PERMISSIONS['bot-channels'], description: 'Command to test permission setting.') do |event|
+  event.respond 'Close ticket command'
 end
 
 bot.command(:meta, help_available: false) do |event|
