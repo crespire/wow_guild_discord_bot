@@ -1,16 +1,16 @@
 ---
-allow-request:
+request:
   # Main Server, Core Raider
   - 819090166093709332
   # Main Server, Standby Raider
   - 832326810791837706
   # Test Server, Core Raider
   - 951603161494356049
-allow-manage:
+manage:
   # Main Server, Council
   - 615733972462206998
   # Test Server, Manager
   - 951872634189144084
-bot-channels:
+channels:
   - '#bot-test'
   - '#guild-bank-info'
