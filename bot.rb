@@ -19,12 +19,7 @@ bot.command(:meta, help_available: false) do |event|
 end
 
 bot.command(:request, min_args: 2, allowed_roles: PERMISSIONS['request'], channels: PERMISSIONS['channels'], description: 'Takes a request and creates a ticket to be resolved. Request multiple items by separating `[number][name]` with a comma.', usage: 'request [number][item name/description](, [number][name of additional items])') do |event, *args|
-  request = args.join(' ')
-  request.gsub!(/(\ba\b|\ban\b)/, '1')
-  request.gsub!(/(\bone\b)/, '1')
-
-  pairs = []
-  request.split(',').chunk { |el| el.match(/[[:digit:]]/) }.each { |_, chunk| pairs << chunk.pop.strip }
+  pairs = transform_input(args)
   event << "Transformed data: #{pairs}"
 
   request_hash = {}
@@ -35,6 +30,15 @@ bot.command(:request, min_args: 2, allowed_roles: PERMISSIONS['request'], channe
 
   event << "Hash: #{request_hash}"
   event << "Your ticket has been received, #{event.user.mention}"
+end
+
+def transform_input(args)
+  input = args.join(' ')
+  input.gsub!(/(\ba\b|\ban\b)/, '1')
+  input.gsub!(/(\bone\b)/, '1')
+  pairs = []
+  input.split(',').chunk { |el| el.match(/[[:digit:]]/) }.each { |_, chunk| pairs << chunk.pop.strip }
+  pairs
 end
 
 bot.run
